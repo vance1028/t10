@@ -158,7 +158,7 @@ const AllocationApplications: React.FC = () => {
         {selectedRecord && (
           <div style={{ marginBottom: 16 }}>
             <p><strong>项目：</strong>{selectedRecord.project_name}</p>
-            <p><strong>金额：</strong>¥{selectedRecord.amount.toFixed(2)}</p>
+            <p><strong>金额：</strong>¥{formatMoney(selectedRecord.amount)}</p>
             <p><strong>用途：</strong>{selectedRecord.purpose}</p>
           </div>
         )}
@@ -188,7 +188,7 @@ const AllocationApplications: React.FC = () => {
         {selectedRecord && (
           <div style={{ marginBottom: 16 }}>
             <p><strong>项目：</strong>{selectedRecord.project_name}</p>
-            <p><strong>金额：</strong>¥{selectedRecord.amount.toFixed(2)}</p>
+            <p><strong>金额：</strong>¥{formatMoney(selectedRecord.amount)}</p>
             <p><strong>用途：</strong>{selectedRecord.purpose}</p>
             <p><strong>财务意见：</strong>{selectedRecord.finance_review_comment || '无'}</p>
           </div>

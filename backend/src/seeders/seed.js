@@ -39,8 +39,8 @@ const seed = async () => {
 
     const [projectResult] = await pool.execute(
       `INSERT INTO projects (name, description, category, total_budget, allocated_amount, spent_amount, remaining_budget, project_manager_id, status, start_date) VALUES 
-       ('山区助学计划', '为偏远山区儿童提供学费、书本费和生活补助，帮助他们完成学业', 'education', 500000.00, 180000.00, 125000.00, 320000.00, ?, 'active', '2024-01-01'),
-       ('大病儿童救助', '为贫困家庭的大病儿童提供医疗费用援助', 'medical', 800000.00, 300000.00, 210000.00, 500000.00, ?, 'active', '2024-02-01'),
+       ('山区助学计划', '为偏远山区儿童提供学费、书本费和生活补助，帮助他们完成学业', 'education', 500000.00, 158000.00, 125000.00, 342000.00, ?, 'active', '2024-01-01'),
+       ('大病儿童救助', '为贫困家庭的大病儿童提供医疗费用援助', 'medical', 800000.00, 302000.00, 210000.00, 498000.00, ?, 'active', '2024-02-01'),
        ('社区养老服务', '为社区独居老人提供日间照料、送餐、健康检查等服务', 'elderly', 300000.00, 0.00, 0.00, 300000.00, ?, 'active', '2024-03-01')`,
       [lixueId, wangdbId, lixueId]
     );
@@ -118,9 +118,12 @@ const seed = async () => {
     const receivedDesignatedP3 = 500;
     const receivedUndesignated = 200000 + 20000 + 50000 + 1000;
 
-    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedUndesignated - 80000 - 100000, receivedUndesignated, poolMap.general]);
-    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP1 + 80000 - 125000, receivedDesignatedP1 + 80000, poolMap[project1Id]]);
-    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP2 + 100000 - 210000, receivedDesignatedP2 + 100000, poolMap[project2Id]]);
+    const allocP1FromGeneral = 150000;
+    const allocP2FromGeneral = 70000;
+
+    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedUndesignated - allocP1FromGeneral - allocP2FromGeneral, receivedUndesignated, poolMap.general]);
+    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP1 + allocP1FromGeneral - 125000, receivedDesignatedP1 + allocP1FromGeneral, poolMap[project1Id]]);
+    await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP2 + allocP2FromGeneral - 210000, receivedDesignatedP2 + allocP2FromGeneral, poolMap[project2Id]]);
     await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP3, receivedDesignatedP3, poolMap[project3Id]]);
     console.log('资金池余额初始化完成');
 

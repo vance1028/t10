@@ -3,7 +3,7 @@ import { Card, Table, Tag, Button, Modal, Statistic, Row, Col } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import { fundApi } from '../../services/api';
 import { FundPool, FundFlow } from '../../types';
-import { formatMoney } from '../../utils/format';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const FundPools: React.FC = () => {
@@ -125,7 +125,7 @@ const FundPools: React.FC = () => {
     }
   ];
 
-  const totalBalance = pools.reduce((sum, p) => sum + p.balance, 0);
+  const totalBalance = pools.reduce((sum, p) => sum + toNumber(p.balance), 0);
 
   return (
     <div>

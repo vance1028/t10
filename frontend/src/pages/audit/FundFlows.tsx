@@ -3,7 +3,7 @@ import { Table, Card, Tag, Space, DatePicker, Select, Row, Col, Button } from 'a
 import { DownloadOutlined } from '@ant-design/icons';
 import { auditApi, fundApi, projectApi } from '../../services/api';
 import { FundFlow, FundPool, Project } from '../../types';
-import { formatMoney } from '../../utils/format';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const FundFlows: React.FC = () => {
@@ -105,8 +105,8 @@ const FundFlows: React.FC = () => {
     }
   ];
 
-  const totalIn = list.filter(f => f.direction === 'in').reduce((sum, f) => sum + f.amount, 0);
-  const totalOut = list.filter(f => f.direction === 'out').reduce((sum, f) => sum + f.amount, 0);
+  const totalIn = list.filter(f => f.direction === 'in').reduce((sum, f) => sum + toNumber(f.amount), 0);
+  const totalOut = list.filter(f => f.direction === 'out').reduce((sum, f) => sum + toNumber(f.amount), 0);
 
   return (
     <div>
@@ -170,13 +170,13 @@ const FundFlows: React.FC = () => {
           <Col span={8}>
             <Card size="small">
               <span style={{ color: '#999' }}>本次筛选流入：</span>
-              <span style={{ color: '#3f8600', fontWeight: 'bold', fontSize: 16 }}>+¥{totalIn.toFixed(2)}</span>
+              <span style={{ color: '#3f8600', fontWeight: 'bold', fontSize: 16 }}>+¥{formatMoney(totalIn)}</span>
             </Card>
           </Col>
           <Col span={8}>
             <Card size="small">
               <span style={{ color: '#999' }}>本次筛选流出：</span>
-              <span style={{ color: '#cf1322', fontWeight: 'bold', fontSize: 16 }}>-¥{totalOut.toFixed(2)}</span>
+              <span style={{ color: '#cf1322', fontWeight: 'bold', fontSize: 16 }}>-¥{formatMoney(totalOut)}</span>
             </Card>
           </Col>
           <Col span={8}>
@@ -187,7 +187,7 @@ const FundFlows: React.FC = () => {
                 fontWeight: 'bold',
                 fontSize: 16
               }}>
-                {totalIn - totalOut >= 0 ? '+' : ''}¥{(totalIn - totalOut).toFixed(2)}
+                {totalIn - totalOut >= 0 ? '+' : ''}¥{formatMoney(totalIn - totalOut)}
               </span>
             </Card>
           </Col>

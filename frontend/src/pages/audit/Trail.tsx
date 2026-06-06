@@ -3,7 +3,7 @@ import { Tabs, Input, Button, Card, Table, Tag, Timeline, Space, message, Select
 import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { auditApi, donationApi, fundApi } from '../../services/api';
 import { Donation, Expenditure, FundAllocation, Beneficiary } from '../../types';
-import { formatMoney } from '../../utils/format';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const Trail: React.FC = () => {
@@ -102,7 +102,7 @@ const Trail: React.FC = () => {
               <Card title="捐赠信息" style={{ marginBottom: 16 }}>
                 <p><strong>捐赠编号：</strong>#{donationData.donation.id}</p>
                 <p><strong>捐赠人：</strong>{donationData.donation.donor_name}</p>
-                <p><strong>金额：</strong>¥{donationData.donation.amount.toFixed(2)}</p>
+                <p><strong>金额：</strong>¥{formatMoney(donationData.donation.amount)}</p>
                 <p><strong>类型：</strong>
                   <Tag color={donationData.donation.donation_type === 'designated' ? 'purple' : 'orange'}>
                     {donationData.donation.donation_type === 'designated' ? `定向 - ${donationData.donation.project_name}` : '非定向'}
@@ -122,7 +122,7 @@ const Trail: React.FC = () => {
                   <Timeline mode="left">
                     <Timeline.Item color="green">
                       <p style={{ fontWeight: 'bold' }}>捐赠入账</p>
-                      <p>¥{donationData.donation.amount.toFixed(2)} 进入{donationData.donation.donation_type === 'designated' ? '项目专项池' : '基金会总池'}</p>
+                      <p>¥{formatMoney(donationData.donation.amount)} 进入{donationData.donation.donation_type === 'designated' ? '项目专项池' : '基金会总池'}</p>
                       <p style={{ color: '#999' }}>{dayjs(donationData.donation.received_date || donationData.donation.created_at).format('YYYY-MM-DD')}</p>
                     </Timeline.Item>
 
@@ -132,7 +132,7 @@ const Trail: React.FC = () => {
                           <p style={{ fontWeight: 'bold' }}>拨付至项目</p>
                           {donationData.allocations.map((a: FundAllocation) => (
                             <p key={a.id}>
-                              ¥{a.amount.toFixed(2)} → {a.project_name}
+                              ¥{formatMoney(a.amount)} → {a.project_name}
                               <Tag color="blue" style={{ marginLeft: 8 }}>{a.source_pool === 'general' ? '总池' : '专项池'}</Tag>
                             </p>
                           ))}
@@ -145,7 +145,7 @@ const Trail: React.FC = () => {
                         <p style={{ fontWeight: 'bold' }}>支出使用</p>
                         {donationData.expenditures.map((e: Expenditure) => (
                           <p key={e.id}>
-                            ¥{e.amount.toFixed(2)} → {e.beneficiary_name || '物资/服务'}
+                            ¥{formatMoney(e.amount)} → {e.beneficiary_name || '物资/服务'}
                             <span style={{ color: '#999', marginLeft: 8 }}>{e.purpose}</span>
                           </p>
                         ))}
@@ -226,12 +226,12 @@ const Trail: React.FC = () => {
                   pagination={false}
                   size="small"
                   summary={(pageData) => {
-                    const total = pageData.reduce((sum, item: any) => sum + item.amount, 0);
+                    const total = pageData.reduce((sum, item: any) => sum + toNumber(item.amount), 0);
                     return (
                       <Table.Summary.Row>
                         <Table.Summary.Cell index={0} colSpan={2}>合计资助</Table.Summary.Cell>
                         <Table.Summary.Cell index={1}>
-                          <span style={{ color: '#cf1322', fontWeight: 'bold' }}>¥{total.toFixed(2)}</span>
+                          <span style={{ color: '#cf1322', fontWeight: 'bold' }}>¥{formatMoney(total)}</span>
                         </Table.Summary.Cell>
                         <Table.Summary.Cell index={2}></Table.Summary.Cell>
                       </Table.Summary.Row>

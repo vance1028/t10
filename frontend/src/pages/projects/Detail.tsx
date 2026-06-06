@@ -5,7 +5,7 @@ import { ArrowLeftOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/i
 import { projectApi, fundApi, auditApi } from '../../services/api';
 import { Project, FundAllocation, Expenditure, Beneficiary } from '../../types';
 import { isAdmin, isProjectManager, getUser } from '../../utils/auth';
-import { formatMoney } from '../../utils/format';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const ProjectDetail: React.FC = () => {
@@ -113,7 +113,7 @@ const ProjectDetail: React.FC = () => {
     {
       title: '金额',
       dataIndex: 'amount',
-      render: (v: number) => <span style={{ color: '#cf1322' }}>-¥{v.toFixed(2)}</span>
+      render: (v: number) => <span style={{ color: '#cf1322' }}>-¥{formatMoney(v)}</span>
     },
     {
       title: '用途',
@@ -162,22 +162,22 @@ const ProjectDetail: React.FC = () => {
         <Row gutter={16} style={{ marginTop: 24 }}>
           <Col span={6}>
             <Card>
-              <Statistic title="总预算" value={project.total_budget} precision={2} prefix="¥" />
+              <Statistic title="总预算" value={toNumber(project.total_budget)} precision={2} prefix="¥" />
             </Card>
           </Col>
           <Col span={6}>
             <Card>
-              <Statistic title="已拨付" value={project.allocated_amount} precision={2} prefix="¥" valueStyle={{ color: '#1890ff' }} />
+              <Statistic title="已拨付" value={toNumber(project.allocated_amount)} precision={2} prefix="¥" valueStyle={{ color: '#1890ff' }} />
             </Card>
           </Col>
           <Col span={6}>
             <Card>
-              <Statistic title="已使用" value={project.spent_amount} precision={2} prefix="¥" valueStyle={{ color: '#cf1322' }} />
+              <Statistic title="已使用" value={toNumber(project.spent_amount)} precision={2} prefix="¥" valueStyle={{ color: '#cf1322' }} />
             </Card>
           </Col>
           <Col span={6}>
             <Card>
-              <Statistic title="剩余预算" value={project.remaining_budget} precision={2} prefix="¥" valueStyle={{ color: '#3f8600' }} />
+              <Statistic title="剩余预算" value={toNumber(project.remaining_budget)} precision={2} prefix="¥" valueStyle={{ color: '#3f8600' }} />
             </Card>
           </Col>
         </Row>

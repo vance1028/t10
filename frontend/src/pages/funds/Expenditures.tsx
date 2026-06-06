@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { fundApi, projectApi } from '../../services/api';
 import { Expenditure, Project, Beneficiary } from '../../types';
 import { isAdmin, isFinance, isProjectManager, getUser } from '../../utils/auth';
-import { formatMoney } from '../../utils/format';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const ExpenditureList: React.FC = () => {
@@ -155,7 +155,7 @@ const ExpenditureList: React.FC = () => {
           <Form.Item label="所属项目" name="project_id" rules={[{ required: true }]}>
             <Select>
               {projects.map(p => (
-                <Select.Option key={p.id} value={p.id}>{p.name} (可用: ¥{(p.allocated_amount - p.spent_amount).toFixed(2)})</Select.Option>
+                <Select.Option key={p.id} value={p.id}>{p.name} (可用: ¥{formatMoney(toNumber(p.allocated_amount) - toNumber(p.spent_amount))})</Select.Option>
               ))}
             </Select>
           </Form.Item>

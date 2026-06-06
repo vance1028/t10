@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="累计募款"
-              value={stats?.donationStats.total_received || 0}
+              value={toNumber(stats?.donationStats.total_received) || 0}
               precision={2}
               prefix={<HeartOutlined style={{ color: '#cf1322' }} />}
               suffix="元"
@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="累计拨付"
-              value={stats?.projectStats.total_allocated || 0}
+              value={toNumber(stats?.projectStats.total_allocated) || 0}
               precision={2}
               prefix={<DollarOutlined style={{ color: '#722ed1' }} />}
               suffix="元"
@@ -110,7 +110,7 @@ const Dashboard: React.FC = () => {
           <Card loading={loading}>
             <Statistic
               title="资金池总余额"
-              value={stats?.poolStats.total_balance || 0}
+              value={toNumber(stats?.poolStats.total_balance) || 0}
               precision={2}
               prefix={<BankOutlined style={{ color: '#3f8600' }} />}
               suffix="元"

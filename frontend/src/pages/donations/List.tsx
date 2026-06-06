@@ -111,7 +111,7 @@ const DonationList: React.FC = () => {
     {
       title: '金额',
       dataIndex: 'amount',
-      render: (v: number) => <span style={{ fontWeight: 'bold' }}>¥{v.toFixed(2)}</span>,
+      render: (v: number) => <span style={{ fontWeight: 'bold' }}>¥{formatMoney(v)}</span>,
       sorter: (a: Donation, b: Donation) => a.amount - b.amount
     },
     {
@@ -349,7 +349,7 @@ const DonationList: React.FC = () => {
           <div>
             <p><strong>捐赠编号：</strong>{detail.id}</p>
             <p><strong>捐赠人：</strong>{detail.donor_name}</p>
-            <p><strong>金额：</strong>¥{detail.amount.toFixed(2)}</p>
+            <p><strong>金额：</strong>¥{formatMoney(detail.amount)}</p>
             <p><strong>类型：</strong>{detail.donation_type === 'designated' ? `定向 - ${detail.project_name}` : '非定向'}</p>
             <p><strong>日期：</strong>{dayjs(detail.donation_date).format('YYYY-MM-DD')}</p>
             <p><strong>状态：</strong>{detail.status}</p>
