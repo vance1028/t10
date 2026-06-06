@@ -256,8 +256,9 @@ router.get('/reports/project/:projectId/export', requireRoles('admin', 'finance'
     worksheet.addRow({ project_name: '日期', value: '金额 / 来源' });
 
     allocations.forEach(alloc => {
+      const dateStr = alloc.created_at ? String(alloc.created_at).split('T')[0] : '';
       worksheet.addRow({
-        project_name: alloc.created_at.split('T')[0],
+        project_name: dateStr,
         value: `${alloc.amount}元 (${alloc.source_pool === 'general' ? '总池' : '定向'})`
       });
     });
@@ -268,8 +269,8 @@ router.get('/reports/project/:projectId/export', requireRoles('admin', 'finance'
 
     expenditures.forEach(exp => {
       worksheet.addRow({
-        project_name: `${exp.expenditure_date} ${exp.beneficiary_name || ''}`,
-        value: `${exp.amount}元 - ${exp.purpose}`
+        project_name: `${exp.expenditure_date || ''} ${exp.beneficiary_name || ''}`,
+        value: `${exp.amount}元 - ${exp.purpose || ''}`
       });
     });
 

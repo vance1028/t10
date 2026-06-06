@@ -3,6 +3,7 @@ import { Table, Card, Tag, Space, DatePicker, Select, Row, Col, Button } from 'a
 import { DownloadOutlined } from '@ant-design/icons';
 import { auditApi, fundApi, projectApi } from '../../services/api';
 import { FundFlow, FundPool, Project } from '../../types';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const FundFlows: React.FC = () => {
@@ -87,7 +88,7 @@ const FundFlows: React.FC = () => {
           color: record.direction === 'in' ? '#3f8600' : '#cf1322',
           fontWeight: 'bold'
         }}>
-          {record.direction === 'in' ? '+' : '-'}¥{v.toFixed(2)}
+          {record.direction === 'in' ? '+' : '-'}¥{formatMoney(v, 2)}
         </span>
       ),
       width: 120
@@ -95,7 +96,7 @@ const FundFlows: React.FC = () => {
     {
       title: '变动后余额',
       dataIndex: 'balance_after',
-      render: (v: number) => `¥${v.toFixed(2)}`,
+      render: (v: number) => `¥${formatMoney(v, 2)}`,
       width: 120
     },
     {

@@ -5,6 +5,7 @@ import { ArrowLeftOutlined, DownloadOutlined, PlusOutlined } from '@ant-design/i
 import { projectApi, fundApi, auditApi } from '../../services/api';
 import { Project, FundAllocation, Expenditure, Beneficiary } from '../../types';
 import { isAdmin, isProjectManager, getUser } from '../../utils/auth';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const ProjectDetail: React.FC = () => {
@@ -86,7 +87,7 @@ const ProjectDetail: React.FC = () => {
     {
       title: '金额',
       dataIndex: 'amount',
-      render: (v: number) => `¥${v.toFixed(2)}`
+      render: (v: number) => `¥${formatMoney(v)}`
     },
     {
       title: '来源',

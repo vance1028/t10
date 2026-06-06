@@ -82,7 +82,7 @@ const seed = async () => {
 
     const donations = [
       { donor_id: donor1Id, amount: 5000.00, date: '2024-01-15', type: 'designated', project_id: project1Id, status: 'received', received: '2024-01-15', receipt: 'RCP20240115001' },
-      { donor_id: donor2Id, amount: 100000.00, date: '2024-01-20', type: 'undesignated', project_id: null, status: 'received', received: '2024-01-21', receipt: 'RCP20240120001' },
+      { donor_id: donor2Id, amount: 200000.00, date: '2024-01-20', type: 'undesignated', project_id: null, status: 'received', received: '2024-01-21', receipt: 'RCP20240120001' },
       { donor_id: donor3Id, amount: 2000.00, date: '2024-02-05', type: 'designated', project_id: project2Id, status: 'received', received: '2024-02-05', receipt: 'RCP20240205001' },
       { donor_id: donor4Id, amount: 20000.00, date: '2024-02-10', type: 'undesignated', project_id: null, status: 'received', received: '2024-02-11', receipt: 'RCP20240210001' },
       { donor_id: donor5Id, amount: 150000.00, date: '2024-02-15', type: 'designated', project_id: project2Id, status: 'received', received: '2024-02-16', receipt: 'RCP20240215001' },
@@ -116,7 +116,7 @@ const seed = async () => {
     const receivedDesignatedP1 = 5000 + 3000;
     const receivedDesignatedP2 = 2000 + 150000 + 80000;
     const receivedDesignatedP3 = 500;
-    const receivedUndesignated = 100000 + 20000 + 50000 + 1000;
+    const receivedUndesignated = 200000 + 20000 + 50000 + 1000;
 
     await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedUndesignated - 80000 - 100000, receivedUndesignated, poolMap.general]);
     await pool.execute('UPDATE fund_pools SET balance = ?, total_in = ? WHERE id = ?', [receivedDesignatedP1 + 80000 - 125000, receivedDesignatedP1 + 80000, poolMap[project1Id]]);
@@ -127,14 +127,14 @@ const seed = async () => {
     await pool.execute(
       `INSERT INTO fund_flows (flow_type, amount, direction, pool_id, related_type, related_id, balance_after, remark) VALUES 
        ('donation_in', 5000, 'in', ?, 'donation', ?, 5000, '定向捐赠入账'),
-       ('donation_in', 100000, 'in', ?, 'donation', ?, 100000, '非定向捐赠入账'),
+       ('donation_in', 200000, 'in', ?, 'donation', ?, 200000, '非定向捐赠入账'),
        ('donation_in', 2000, 'in', ?, 'donation', ?, 2000, '定向捐赠入账'),
-       ('donation_in', 20000, 'in', ?, 'donation', ?, 120000, '非定向捐赠入账'),
+       ('donation_in', 20000, 'in', ?, 'donation', ?, 220000, '非定向捐赠入账'),
        ('donation_in', 150000, 'in', ?, 'donation', ?, 152000, '定向捐赠入账'),
        ('donation_in', 3000, 'in', ?, 'donation', ?, 8000, '定向捐赠入账'),
-       ('donation_in', 50000, 'in', ?, 'donation', ?, 170000, '非定向捐赠入账'),
+       ('donation_in', 50000, 'in', ?, 'donation', ?, 270000, '非定向捐赠入账'),
        ('donation_in', 500, 'in', ?, 'donation', ?, 500, '定向捐赠入账'),
-       ('donation_in', 1000, 'in', ?, 'donation', ?, 171000, '非定向捐赠入账'),
+       ('donation_in', 1000, 'in', ?, 'donation', ?, 271000, '非定向捐赠入账'),
        ('donation_in', 80000, 'in', ?, 'donation', ?, 232000, '定向捐赠入账')`,
       [
         poolMap[project1Id], donationIds[0],
@@ -174,9 +174,9 @@ const seed = async () => {
 
     await pool.execute(
       `INSERT INTO fund_flows (flow_type, amount, direction, pool_id, related_type, related_id, balance_after, remark) VALUES 
-       ('allocation_out', 80000, 'out', ?, 'allocation', ?, 90000, '拨付至山区助学计划'),
+       ('allocation_out', 80000, 'out', ?, 'allocation', ?, 191000, '拨付至山区助学计划'),
        ('allocation_in', 80000, 'in', ?, 'allocation', ?, 88000, '项目拨款入账'),
-       ('allocation_out', 100000, 'out', ?, 'allocation', ?, 70000, '拨付至大病儿童救助'),
+       ('allocation_out', 100000, 'out', ?, 'allocation', ?, 91000, '拨付至大病儿童救助'),
        ('allocation_in', 100000, 'in', ?, 'allocation', ?, 252000, '项目拨款入账')`,
       [
         poolMap.general, allocResult.insertId,

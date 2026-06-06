@@ -4,6 +4,7 @@ import { PlusOutlined, CheckCircleOutlined, EyeOutlined } from '@ant-design/icon
 import { donationApi, projectApi } from '../../services/api';
 import { Donation, Project, Donor } from '../../types';
 import { isAdmin, isFinance } from '../../utils/auth';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const DonationList: React.FC = () => {

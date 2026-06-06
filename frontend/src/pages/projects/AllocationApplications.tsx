@@ -4,6 +4,7 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { projectApi } from '../../services/api';
 import { AllocationApplication } from '../../types';
 import { isAdmin, isFinance, isProjectManager, getUser } from '../../utils/auth';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const AllocationApplications: React.FC = () => {
@@ -74,7 +75,7 @@ const AllocationApplications: React.FC = () => {
     {
       title: '申请金额',
       dataIndex: 'amount',
-      render: (v: number) => <span style={{ fontWeight: 'bold' }}>¥{v.toFixed(2)}</span>
+      render: (v: number) => <span style={{ fontWeight: 'bold' }}>¥{formatMoney(v, 2)}</span>
     },
     {
       title: '资金来源',

@@ -11,6 +11,7 @@ import {
 import { auditApi } from '../services/api';
 import { Statistics, FundFlow } from '../types';
 import dayjs from 'dayjs';
+import { formatMoney, toNumber } from '../utils/format';
 
 const Dashboard: React.FC = () => {
   const [stats, setStats] = useState<Statistics | null>(null);
@@ -57,14 +58,14 @@ const Dashboard: React.FC = () => {
       dataIndex: 'amount',
       render: (v: number, record: FundFlow) => (
         <span style={{ color: record.direction === 'in' ? '#3f8600' : '#cf1322' }}>
-          {record.direction === 'in' ? '+' : '-'}{v.toFixed(2)}
+          {record.direction === 'in' ? '+' : '-'}{formatMoney(v)}
         </span>
       )
     },
     {
       title: '余额',
       dataIndex: 'balance_after',
-      render: (v: number) => v.toFixed(2)
+      render: (v: number) => formatMoney(v)
     }
   ];
 

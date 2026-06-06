@@ -3,6 +3,7 @@ import { Card, Table, Tag, Button, Modal, Statistic, Row, Col } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import { fundApi } from '../../services/api';
 import { FundPool, FundFlow } from '../../types';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const FundPools: React.FC = () => {
@@ -61,18 +62,18 @@ const FundPools: React.FC = () => {
     {
       title: '当前余额',
       dataIndex: 'balance',
-      render: (v: number) => <span style={{ fontWeight: 'bold', color: '#3f8600' }}>¥{v.toFixed(2)}</span>,
+      render: (v: number) => <span style={{ fontWeight: 'bold', color: '#3f8600' }}>¥{formatMoney(v, 2)}</span>,
       sorter: (a: FundPool, b: FundPool) => a.balance - b.balance
     },
     {
       title: '累计收入',
       dataIndex: 'total_in',
-      render: (v: number) => <span style={{ color: '#3f8600' }}>+¥{v.toFixed(2)}</span>
+      render: (v: number) => <span style={{ color: '#3f8600' }}>+¥{formatMoney(v, 2)}</span>
     },
     {
       title: '累计支出',
       dataIndex: 'total_out',
-      render: (v: number) => <span style={{ color: '#cf1322' }}>-¥{v.toFixed(2)}</span>
+      render: (v: number) => <span style={{ color: '#cf1322' }}>-¥{formatMoney(v, 2)}</span>
     },
     {
       title: '操作',
@@ -109,14 +110,14 @@ const FundPools: React.FC = () => {
       dataIndex: 'amount',
       render: (v: number, record: FundFlow) => (
         <span style={{ color: record.direction === 'in' ? '#3f8600' : '#cf1322' }}>
-          {record.direction === 'in' ? '+' : '-'}¥{v.toFixed(2)}
+          {record.direction === 'in' ? '+' : '-'}¥{formatMoney(v, 2)}
         </span>
       )
     },
     {
       title: '变动后余额',
       dataIndex: 'balance_after',
-      render: (v: number) => `¥${v.toFixed(2)}`
+      render: (v: number) => `¥${formatMoney(v, 2)}`
     },
     {
       title: '备注',

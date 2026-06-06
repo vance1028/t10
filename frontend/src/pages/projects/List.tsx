@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { projectApi, userApi, fundApi } from '../../services/api';
 import { Project } from '../../types';
 import { isAdmin, isProjectManager, getUser } from '../../utils/auth';
+import { formatMoney, toNumber } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const ProjectList: React.FC = () => {
@@ -106,7 +107,7 @@ const ProjectList: React.FC = () => {
     {
       title: '预算',
       dataIndex: 'total_budget',
-      render: (v: number) => `¥${v.toFixed(0)}`
+      render: (v: number) => `¥${formatMoney(v, 0)}`
     },
     {
       title: '执行进度',
@@ -125,12 +126,12 @@ const ProjectList: React.FC = () => {
     {
       title: '已拨付',
       dataIndex: 'allocated_amount',
-      render: (v: number) => `¥${v.toFixed(0)}`
+      render: (v: number) => `¥${formatMoney(v, 0)}`
     },
     {
       title: '已使用',
       dataIndex: 'spent_amount',
-      render: (v: number) => `¥${v.toFixed(0)}`
+      render: (v: number) => `¥${formatMoney(v, 0)}`
     },
     {
       title: '状态',

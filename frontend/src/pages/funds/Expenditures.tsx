@@ -4,6 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { fundApi, projectApi } from '../../services/api';
 import { Expenditure, Project, Beneficiary } from '../../types';
 import { isAdmin, isFinance, isProjectManager, getUser } from '../../utils/auth';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const ExpenditureList: React.FC = () => {
@@ -89,7 +90,7 @@ const ExpenditureList: React.FC = () => {
     {
       title: '金额',
       dataIndex: 'amount',
-      render: (v: number) => <span style={{ color: '#cf1322', fontWeight: 'bold' }}>-¥{v.toFixed(2)}</span>,
+      render: (v: number) => <span style={{ color: '#cf1322', fontWeight: 'bold' }}>-¥{formatMoney(v, 2)}</span>,
       sorter: (a: Expenditure, b: Expenditure) => a.amount - b.amount
     },
     {

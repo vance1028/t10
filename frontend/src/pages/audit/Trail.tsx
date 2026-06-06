@@ -3,6 +3,7 @@ import { Tabs, Input, Button, Card, Table, Tag, Timeline, Space, message, Select
 import { SearchOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { auditApi, donationApi, fundApi } from '../../services/api';
 import { Donation, Expenditure, FundAllocation, Beneficiary } from '../../types';
+import { formatMoney } from '../../utils/format';
 import dayjs from 'dayjs';
 
 const Trail: React.FC = () => {
@@ -213,7 +214,7 @@ const Trail: React.FC = () => {
                     {
                       title: '金额',
                       dataIndex: 'amount',
-                      render: (v: number) => <span style={{ color: '#cf1322' }}>¥{v.toFixed(2)}</span>
+                      render: (v: number) => <span style={{ color: '#cf1322' }}>¥{formatMoney(v, 2)}</span>
                     },
                     {
                       title: '用途',
@@ -256,7 +257,7 @@ const Trail: React.FC = () => {
                       {
                         title: '金额',
                         dataIndex: 'amount',
-                        render: (v: number) => `¥${v.toFixed(2)}`
+                        render: (v: number) => `¥${formatMoney(v, 2)}`
                       },
                       {
                         title: '类型',
